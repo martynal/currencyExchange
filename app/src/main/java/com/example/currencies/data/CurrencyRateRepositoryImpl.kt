@@ -11,9 +11,9 @@ import com.example.currencies.data.db.model.CurrencyRateTuple
 import com.example.currencies.data.db.model.CurrencyReceiveSelectionTimestamp
 import com.example.currencies.data.db.model.CurrencySellSelectionTimestamp
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.retry
 import java.math.BigDecimal
 import java.util.*
 import javax.inject.Inject
@@ -61,7 +61,8 @@ class CurrencyRateRepositoryImpl @Inject constructor(
             .onEach { rates ->
                 currencyRateDao.insertAll(rates)
             }
-            .catch { emit(currencyRateDao.getAll()) }
+            .retry()
+
     }
 
     override suspend fun getCurrencies() = currencyRateDao.getAll()
