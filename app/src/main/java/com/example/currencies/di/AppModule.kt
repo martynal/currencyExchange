@@ -26,7 +26,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideGlowApiService(retrofit: Retrofit): CurrenciesApiService =
+    fun provideApiService(retrofit: Retrofit): CurrenciesApiService =
         retrofit.create(CurrenciesApiService::class.java)
 
     @Singleton
